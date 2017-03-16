@@ -1,0 +1,2 @@
+# photoSliderComponent
+photo slider
