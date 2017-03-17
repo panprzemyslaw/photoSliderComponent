@@ -3,35 +3,52 @@ import template from './PhotoSlider.component.template.html';
 
 class PhotoSlider {
 
-    static get $inject() {
-        return ['$element', '$document', '$timeout'];
+  static get $inject() {
+    return ['flickrService'];
+  }
+
+  constructor(flickrService) {
+    console.debug("constructor");
+    this.flickr = flickrService;
+  }
+
+  $onInit() {
+    console.debug('onInit ');
+    this.images = [];
+    this.page = 1;
+    this.flickr.getPhotosByCategory(this.category, this.limit, this.page)
+      .then(this.getImagesFromResponse.bind(this))
+      .catch(this.handleError.bind(this));
+  }
+
+  getImagesFromResponse(response) {
+    console.debug(response);
+    this.photos = response.data.photos.photo;
+    console.debug('photos ', this.photos);
+    for (const photo of this.photos) {
+      this.images.push({
+        url: this.flickr.getImageURL(photo),
+        title: `${photo.title}`
+      });
     }
+  }
 
-    constructor() {
+  handleError(error) {
+    console.debug('error ', error);
+  }
 
-    }
+  $onChanges(changes) {
+    console.debug('onChanges ', changes);
 
-    $onInit() {
-
-    }
-
-    $onChanges(changes) {
-
-    }
-
-    // notify parent
-    updateParent() {
-        this.onUpdate({
-            $event: {}
-        });
-    }
-
-
+  }
 
 }
 
 export default {
-    bindings: {},
-    controller: PhotoSlider,
-    template
+  bindings: {
+    category: '@',
+    limit: '<'
+  },
+  controller: PhotoSlider,
+  template
 };
