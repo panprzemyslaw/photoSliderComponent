@@ -3,6 +3,7 @@ import template from './PhotoSlider.component.template.html';
 
 const NEXT = 'next';
 const PREV = 'prev';
+const ERROR_MESSAGE = 'There was an error when loading photos form Flickr. Please try again in a while.';
 
 class PhotoSlider {
 
@@ -121,12 +122,13 @@ class PhotoSlider {
   }
 
   updateInfo() {
-    const infoBox = angular.element(this.element[0].querySelectorAll('.photo-info'));
+    const infoBox = angular.element(this.element[0].querySelector('.photo-info'));
     infoBox.html(this.images[this.currentPhotoIndex].title);
   }
 
-  handleError(error) {
-
+  handleError() {
+    const errorBox = angular.element(this.element[0].querySelector('.error-info'));
+    errorBox.html(ERROR_MESSAGE);
   }
 
   $onChanges(changes) {
@@ -137,7 +139,6 @@ class PhotoSlider {
       this.limit = angular.copy(changes.limit.currentValue);
     }
   }
-
 }
 
 export default {
