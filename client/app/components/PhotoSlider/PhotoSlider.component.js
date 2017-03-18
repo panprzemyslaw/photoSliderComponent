@@ -130,8 +130,12 @@ class PhotoSlider {
   }
 
   $onChanges(changes) {
-
-
+    if (changes.category) {
+      this.category = angular.copy(changes.category.currentValue);
+    }
+    if (changes.limit) {
+      this.limit = angular.copy(changes.limit.currentValue);
+    }
   }
 
 }
