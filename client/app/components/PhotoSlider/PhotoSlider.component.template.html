@@ -3,6 +3,7 @@
     <h2>Photo Slider showing photos from Flickr's "{{$ctrl.category}}" category</h2>
 
     <div class="slider-container">
+        <div class="preloader" ng-if="$ctrl.isLoadingContent">Loading content...</div>
         <a ng-if="!$ctrl.isActiveFirst" class="thumb prev" title="previous image" href="#" ng-click="$ctrl.showPrev()"></a>
         <div class="mask">
             <ul ng-class="{'animate-next': $ctrl.isAnimationNext, 'animate-prev': $ctrl.isAnimationPrev}">

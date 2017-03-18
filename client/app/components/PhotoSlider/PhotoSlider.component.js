@@ -18,9 +18,15 @@ class PhotoSlider {
     this.page = 1;
     this.currentPhotoIndex = 0;
     this.animation = 'next';
+    this.isLoadingContent = true;
+    this.loadAndDisplayPhotos();
+  }
+
+  loadAndDisplayPhotos() {
     this.flickr.getPhotosByCategory(this.category, this.limit, this.page)
       .then(this.getImagesFromResponse.bind(this))
-      .catch(this.handleError.bind(this));
+      .catch(this.handleError.bind(this))
+      .finally(() => {this.isLoadingContent = false});
   }
 
   getImagesFromResponse(response) {
@@ -36,6 +42,11 @@ class PhotoSlider {
     }
     this.images[this.currentPhotoIndex].isActive = true;
     this.images[this.currentPhotoIndex + 1].isNext = true;
+  }
+
+  getNextPhotoSet() {
+    this.page++;
+    this.loadAndDisplayPhotos();
   }
 
   get isActiveFirst() {
@@ -74,6 +85,9 @@ class PhotoSlider {
     this.images[this.currentPhotoIndex].isActive = true;
     this.images[this.currentPhotoIndex].isNext = false;
     this.images[this.currentPhotoIndex + 1].isNext = true;
+    if (this.currentPhotoIndex === this.images.length - 2){
+      this.getNextPhotoSet();
+    }
   }
 
   showPrev() {
