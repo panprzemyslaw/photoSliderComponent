@@ -16,6 +16,7 @@ class PhotoSlider {
     console.debug('onInit ');
     this.images = [];
     this.page = 1;
+    this.currentPhotoIndex = 0;
     this.flickr.getPhotosByCategory(this.category, this.limit, this.page)
       .then(this.getImagesFromResponse.bind(this))
       .catch(this.handleError.bind(this));
@@ -28,9 +29,16 @@ class PhotoSlider {
     for (const photo of this.photos) {
       this.images.push({
         url: this.flickr.getImageURL(photo),
-        title: `${photo.title}`
+        title: `${photo.title}`,
+        isActive: false
       });
     }
+    this.images[0].isFirst = true;
+    this.images[this.currentPhotoIndex].isActive = true;
+  }
+
+  get isPrevBtnVisible() {
+    return this.currentPhotoIndex === 0;
   }
 
   handleError(error) {

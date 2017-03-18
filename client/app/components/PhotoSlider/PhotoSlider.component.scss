@@ -1,7 +1,65 @@
-.gallery {
-  overflow: hidden;
-  margin: 10px;
-  .photo {
-    float: left;
+$photo_size: 150px;
+$thumb_size: 75px;
+
+body {
+  font-size: 10px;
+  font-family: aria, verdana, sans-serif;
+  .gallery {
+    overflow: hidden;
+    margin: 10px;
+    .slider-container {
+      position: relative;
+      overflow: hidden;
+      background: grey;
+      padding: 5px;
+      width: 350px;
+      .mask {
+        width: $photo_size * 3;
+        height: $photo_size;
+        float: left;
+        overflow: hidden
+      }
+      ul {
+        padding: 0;
+        margin: 0;
+        list-style-type: none;
+        width: 1000000px;
+      }
+      .photo {
+        float: left;
+        margin-left: 15px;
+        margin-top: 38px;
+        img {
+          width: $thumb_size;
+          height: $thumb_size;
+        }
+        &.active {
+          margin-top: 0px;
+          img {
+            width: $photo_size;
+            height: $photo_size;
+          }
+        }
+        &.first {
+          margin-left: 100px;
+        }
+      }
+      .thumb {
+        position: absolute;
+        display: block;
+        width: $thumb_size;
+        height: $thumb_size;
+        top: calc(50% - 37px);
+        z-index: 10;
+        &.prev {
+          float: left;
+          left: 10px;
+        }
+        &.next {
+          float: right;
+          right: 10px;
+        }
+      }
+    }
   }
 }
