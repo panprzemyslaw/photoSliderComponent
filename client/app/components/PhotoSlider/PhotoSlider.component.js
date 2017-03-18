@@ -17,6 +17,7 @@ class PhotoSlider {
     this.images = [];
     this.page = 1;
     this.currentPhotoIndex = 0;
+    this.animation = 'next';
     this.flickr.getPhotosByCategory(this.category, this.limit, this.page)
       .then(this.getImagesFromResponse.bind(this))
       .catch(this.handleError.bind(this));
@@ -33,12 +34,59 @@ class PhotoSlider {
         isActive: false
       });
     }
-    this.images[0].isFirst = true;
     this.images[this.currentPhotoIndex].isActive = true;
+    this.images[this.currentPhotoIndex + 1].isNext = true;
   }
 
-  get isPrevBtnVisible() {
-    return this.currentPhotoIndex === 0;
+  get isActiveFirst() {
+    if (this.images[0]){
+      return this.images[0].isActive;
+    } else {
+      return false;
+    }
+  }
+
+  get isActiveLast() {
+    const indexLast = this.images.length - 1;
+    if (this.images[indexLast]){
+      return this.images[indexLast].isActive;
+    } else {
+      return false;
+    }
+  }
+
+  get isAnimationNext() {
+    return this.animation === 'next';
+  }
+
+  get isAnimationPrev() {
+    return this.animation === 'prev';
+  }
+
+  showNext() {
+    this.animation = 'next';
+    if (this.images[this.currentPhotoIndex - 1]){
+      this.images[this.currentPhotoIndex - 1].isPrev = false;
+    }
+    this.images[this.currentPhotoIndex].isActive = false;
+    this.images[this.currentPhotoIndex].isPrev = true;
+    this.currentPhotoIndex++;
+    this.images[this.currentPhotoIndex].isActive = true;
+    this.images[this.currentPhotoIndex].isNext = false;
+    this.images[this.currentPhotoIndex + 1].isNext = true;
+  }
+
+  showPrev() {
+    this.animation = 'prev';
+    if (this.images[this.currentPhotoIndex + 1]){
+      this.images[this.currentPhotoIndex + 1].isNext = false;
+    }
+    this.images[this.currentPhotoIndex].isActive = false;
+    this.images[this.currentPhotoIndex].isNext = true;
+    this.currentPhotoIndex--;
+    this.images[this.currentPhotoIndex].isActive = true;
+    this.images[this.currentPhotoIndex].isPrev = false;
+    this.images[this.currentPhotoIndex - 1].isPrev = true;
   }
 
   handleError(error) {

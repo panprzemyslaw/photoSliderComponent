@@ -11,10 +11,10 @@ body {
       position: relative;
       overflow: hidden;
       background: grey;
-      padding: 5px;
-      width: 350px;
+      width: 370px;
       .mask {
-        width: $photo_size * 3;
+        margin: 10px;
+        width: 350px;
         height: $photo_size;
         float: left;
         overflow: hidden
@@ -24,24 +24,58 @@ body {
         margin: 0;
         list-style-type: none;
         width: 1000000px;
-      }
-      .photo {
-        float: left;
-        margin-left: 15px;
-        margin-top: 38px;
-        img {
-          width: $thumb_size;
-          height: $thumb_size;
-        }
-        &.active {
-          margin-top: 0px;
-          img {
-            width: $photo_size;
-            height: $photo_size;
+        .photo {
+          display: none;
+          float: left;
+          margin-left: 15px;
+          margin-top: 38px;
+          &:not(.active) img {
+            width: $thumb_size;
+            height: $thumb_size;
+          }
+          &.active, &.prev, &.next {
+            display: block;
+          }
+          &.first {
+            margin-left: 100px;
+          }
+          &.prev {
+            margin-left: 10px;
+          }
+          &.active {
+            margin-top: 0px;
+            img {
+              animation: activate 1s ease alternate;
+            }
           }
         }
-        &.first {
-          margin-left: 100px;
+        &.animate-next {
+          .photo {
+            &.next {
+              img {
+                animation: nextShowNext 1s ease alternate;
+              }
+            }
+            &.prev {
+              img {
+                animation: nextShowPrev 1s ease alternate;
+              }
+            }
+          }
+        }
+        &.animate-prev {
+          .photo {
+            &.next {
+              img {
+                animation: prevShowNext 1s ease alternate;
+              }
+            }
+            &.prev {
+              img {
+                animation: prevShowPrev 1s ease alternate;
+              }
+            }
+          }
         }
       }
       .thumb {
@@ -53,13 +87,36 @@ body {
         z-index: 10;
         &.prev {
           float: left;
-          left: 10px;
+          left: 20px;
         }
         &.next {
           float: right;
-          right: 10px;
+          right: 20px;
         }
       }
     }
   }
+}
+
+/*Animations*/
+
+@keyframes activate {
+  0% {transform: scale(0);}
+  100% {transform: scale(1);}
+}
+@keyframes nextShowNext {
+  0% {transform: translateX(90px);}
+  100% {transform: translateX(0px);}
+}
+@keyframes nextShowPrev {
+  0% {transform: translateX(150px); width: $photo_size; height: $photo_size;}
+  100% {transform: translateX(0px); width: $thumb_size; height: $thumb_size;}
+}
+@keyframes prevShowNext {
+  0% {transform: translateX(-150px); width: $photo_size; height: $photo_size;}
+  100% {transform: translateX(0px); width: $thumb_size; height: $thumb_size;}
+}
+@keyframes prevShowPrev {
+  0% {transform: translateX(-90px);}
+  100% {transform: translateX(0px);}
 }
