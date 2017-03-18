@@ -1,6 +1,9 @@
 import angular from 'angular';
 import template from './PhotoSlider.component.template.html';
 
+const NEXT = 'next';
+const PREV = 'prev';
+
 class PhotoSlider {
 
   static get $inject() {
@@ -8,17 +11,15 @@ class PhotoSlider {
   }
 
   constructor(flickrService, $element) {
-    console.debug("constructor");
     this.flickr = flickrService;
     this.element = $element;
   }
 
   $onInit() {
-    console.debug('onInit ');
     this.images = [];
     this.page = 1;
     this.currentPhotoIndex = 0;
-    this.animation = 'next';
+    this.animation = NEXT;
     this.isLoadingContent = true;
     this.loadAndDisplayPhotos();
   }
@@ -31,9 +32,7 @@ class PhotoSlider {
   }
 
   getImagesFromResponse(response) {
-    console.debug(response);
     this.photos = response.data.photos.photo;
-    console.debug('photos ', this.photos);
     for (const photo of this.photos) {
       this.images.push({
         url: this.flickr.getImageURL(photo),
@@ -52,8 +51,9 @@ class PhotoSlider {
   }
 
   get isActiveFirst() {
-    if (this.images[0]){
-      return this.images[0].isActive;
+    const firstImage = this.images[0];
+    if (firstImage){
+      return firstImage.isActive;
     } else {
       return false;
     }
@@ -61,32 +61,39 @@ class PhotoSlider {
 
   get isActiveLast() {
     const indexLast = this.images.length - 1;
-    if (this.images[indexLast]){
-      return this.images[indexLast].isActive;
+    const lastImage = this.images[indexLast];
+    if (lastImage){
+      return lastImage.isActive;
     } else {
       return false;
     }
   }
 
   get isAnimationNext() {
-    return this.animation === 'next';
+    return this.animation === NEXT;
   }
 
   get isAnimationPrev() {
-    return this.animation === 'prev';
+    return this.animation === PREV;
   }
 
   showNext() {
-    this.animation = 'next';
-    if (this.images[this.currentPhotoIndex - 1]){
-      this.images[this.currentPhotoIndex - 1].isPrev = false;
+    this.animation = NEXT;
+    const currentImage = this.images[this.currentPhotoIndex];
+    const prevImage = this.images[this.currentPhotoIndex - 1];
+    const nextImage = this.images[this.currentPhotoIndex + 1];
+    const imageAfterNext = this.images[this.currentPhotoIndex + 2];
+    if (prevImage){
+      prevImage.isPrev = false;
     }
-    this.images[this.currentPhotoIndex].isActive = false;
-    this.images[this.currentPhotoIndex].isPrev = true;
+    currentImage.isActive = false;
+    currentImage.isPrev = true;
+    nextImage.isActive = true;
+    nextImage.isNext = false;
+    if (imageAfterNext) {
+      imageAfterNext.isNext = true;
+    }
     this.currentPhotoIndex++;
-    this.images[this.currentPhotoIndex].isActive = true;
-    this.images[this.currentPhotoIndex].isNext = false;
-    this.images[this.currentPhotoIndex + 1].isNext = true;
     if (this.currentPhotoIndex === this.images.length - 2){
       this.getNextPhotoSet();
     }
@@ -94,16 +101,22 @@ class PhotoSlider {
   }
 
   showPrev() {
-    this.animation = 'prev';
-    if (this.images[this.currentPhotoIndex + 1]){
-      this.images[this.currentPhotoIndex + 1].isNext = false;
+    this.animation = PREV;
+    const currentImage = this.images[this.currentPhotoIndex];
+    const prevImage = this.images[this.currentPhotoIndex - 1];
+    const nextImage = this.images[this.currentPhotoIndex + 1];
+    const imageBeforePrev = this.images[this.currentPhotoIndex - 2];
+    if (nextImage){
+      nextImage.isNext = false;
     }
-    this.images[this.currentPhotoIndex].isActive = false;
-    this.images[this.currentPhotoIndex].isNext = true;
+    currentImage.isActive = false;
+    currentImage.isNext = true;
+    prevImage.isActive = true;
+    prevImage.isPrev = false;
+    if (imageBeforePrev){
+      imageBeforePrev.isPrev = true;
+    }
     this.currentPhotoIndex--;
-    this.images[this.currentPhotoIndex].isActive = true;
-    this.images[this.currentPhotoIndex].isPrev = false;
-    this.images[this.currentPhotoIndex - 1].isPrev = true;
     this.updateInfo()
   }
 
@@ -113,11 +126,11 @@ class PhotoSlider {
   }
 
   handleError(error) {
-    console.debug('error ', error);
+
   }
 
   $onChanges(changes) {
-    console.debug('onChanges ', changes);
+
 
   }
 

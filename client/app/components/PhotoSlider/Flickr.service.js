@@ -5,7 +5,7 @@ export default class FlickService {
   }
 
   constructor($http) {
-    console.debug("Flickr service");
+
     this.http = $http;
     this.key ='ef5fbb889d09e2e9a813526c99d111fb';
     this.url = `https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${this.key}&format=json&nojsoncallback=1`;
