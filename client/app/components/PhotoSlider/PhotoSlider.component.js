@@ -4,12 +4,13 @@ import template from './PhotoSlider.component.template.html';
 class PhotoSlider {
 
   static get $inject() {
-    return ['flickrService'];
+    return ['flickrService', '$element'];
   }
 
-  constructor(flickrService) {
+  constructor(flickrService, $element) {
     console.debug("constructor");
     this.flickr = flickrService;
+    this.element = $element;
   }
 
   $onInit() {
@@ -42,6 +43,7 @@ class PhotoSlider {
     }
     this.images[this.currentPhotoIndex].isActive = true;
     this.images[this.currentPhotoIndex + 1].isNext = true;
+    this.updateInfo();
   }
 
   getNextPhotoSet() {
@@ -88,6 +90,7 @@ class PhotoSlider {
     if (this.currentPhotoIndex === this.images.length - 2){
       this.getNextPhotoSet();
     }
+    this.updateInfo();
   }
 
   showPrev() {
@@ -101,6 +104,12 @@ class PhotoSlider {
     this.images[this.currentPhotoIndex].isActive = true;
     this.images[this.currentPhotoIndex].isPrev = false;
     this.images[this.currentPhotoIndex - 1].isPrev = true;
+    this.updateInfo()
+  }
+
+  updateInfo() {
+    const infoBox = angular.element(this.element[0].querySelectorAll('.photo-info'));
+    infoBox.html(this.images[this.currentPhotoIndex].title);
   }
 
   handleError(error) {
