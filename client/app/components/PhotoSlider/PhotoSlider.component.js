@@ -3,17 +3,18 @@ import template from './PhotoSlider.component.template.html';
 
 const NEXT = 'next';
 const PREV = 'prev';
-const ERROR_MESSAGE = 'There was an error when loading photos form Flickr. Please try again in a while.';
+const ERROR_MESSAGE = 'There was an error when loading photos from Flickr. Please try again in a while.';
 
 class PhotoSlider {
 
   static get $inject() {
-    return ['flickrService', '$element'];
+    return ['flickrService', '$element', '$timeout'];
   }
 
-  constructor(flickrService, $element) {
+  constructor(flickrService, $element, $timeout) {
     this.flickr = flickrService;
     this.element = $element;
+    this.timeout = $timeout;
   }
 
   $onInit() {
@@ -98,6 +99,7 @@ class PhotoSlider {
     if (this.currentPhotoIndex === this.images.length - 2){
       this.getNextPhotoSet();
     }
+    this.hideThumbs(1000);
     this.updateInfo();
   }
 
@@ -118,7 +120,15 @@ class PhotoSlider {
       imageBeforePrev.isPrev = true;
     }
     this.currentPhotoIndex--;
+    this.hideThumbs(1000);
     this.updateInfo()
+  }
+
+  hideThumbs(milliseconds) {
+    this.thumbsHidden = true;
+    this.timeout(() => {
+      this.thumbsHidden = false;
+    }, milliseconds)
   }
 
   updateInfo() {
@@ -127,6 +137,7 @@ class PhotoSlider {
   }
 
   handleError() {
+    this.displayError = true;
     const errorBox = angular.element(this.element[0].querySelector('.error-info'));
     errorBox.html(ERROR_MESSAGE);
   }

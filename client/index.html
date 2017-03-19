@@ -13,9 +13,16 @@
   </head>
   <body ng-app="app" ng-strict-di ng-cloak>
 
-    <photo-slider category="flower" limit="15"></photo-slider>
+    <div class="page">
 
-    <photo-slider category="cat" limit="15"></photo-slider>
+      <h2>Example 1. Flickr's "flower" category</h2>
+
+      <photo-slider category="flower" limit="15" class="photo-slider"></photo-slider>
+
+      <h2>Example 2. Flickr's "cat" category</h2>
+
+      <photo-slider category="cat" limit="15" class="photo-slider"></photo-slider>
+    </div>
 
   </body>
 </html>

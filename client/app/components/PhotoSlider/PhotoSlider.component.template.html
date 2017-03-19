@@ -1,10 +1,12 @@
 <div class="gallery {{$ctrl.category}}">
-
-    <h2>Photo Slider showing photos from Flickr's "{{$ctrl.category}}" category</h2>
-
+    <a href="#" class="nav next" ng-class="{'disabled': $ctrl.isActiveLast}" title="previous image" ng-click="$ctrl.isActiveLast || $ctrl.showNext()">
+        <span class="arrow left"></span>
+    </a>
     <div class="slider-container">
-        <div class="preloader" ng-if="$ctrl.isLoadingContent">Loading content...</div>
-        <a ng-if="!$ctrl.isActiveFirst" class="thumb prev" title="previous image" href="#" ng-click="$ctrl.showPrev()"></a>
+        <div class="preloader" ng-if="$ctrl.isLoadingContent">&#8635; Loading...</div>
+        <a ng-if="!$ctrl.isActiveFirst" class="thumb prev" ng-class="{'hide': $ctrl.thumbsHidden}" title="previous image" href="#" ng-click="$ctrl.showPrev()">
+            prev
+        </a>
         <div class="mask">
             <ul ng-class="{'animate-next': $ctrl.isAnimationNext, 'animate-prev': $ctrl.isAnimationPrev}">
                 <li ng-repeat="image in $ctrl.images" class="photo" ng-class="{'active': image.isActive, 'first': $ctrl.isActiveFirst && image.isActive, 'next': image.isNext, 'prev': image.isPrev}">
@@ -12,8 +14,13 @@
                 </li>
             </ul>
         </div>
-        <a ng-if="!$ctrl.isActiveLast" class="thumb next" title="next image" ng-click="$ctrl.showNext()" href="#"></a>
+        <a ng-if="!$ctrl.isActiveLast" class="thumb next" ng-class="{'hide': $ctrl.thumbsHidden}" title="next image" ng-click="$ctrl.showNext()" href="#">
+            next
+        </a>
         <div class="photo-info"></div>
-        <div class="error-info"></div>
+        <div class="error-info" ng-if="$ctrl.displayError"></div>
     </div>
+    <a href="#" class="nav prev" ng-class="{'disabled': $ctrl.isActiveFirst}" title="next image" ng-click="$ctrl.isActiveFirst || $ctrl.showPrev()">
+        <span class="arrow right"></span>
+    </a>
 </div>

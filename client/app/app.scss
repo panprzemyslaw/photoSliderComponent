@@ -1,1 +1,21 @@
 @import 'components/PhotoSlider/PhotoSlider.component.scss';
+
+body {
+  font-size: 10px;
+  font-family: aria, verdana, sans-serif;
+  color: #333;
+
+  .page {
+    width: 960px;
+    margin: 0 auto 50px auto;
+    h2 {
+      border-bottom: 1px solid #333;
+      margin: 30px 0 30px 0;
+    }
+    .photo-slider {
+      display: block;
+      width: 440px;
+      margin: 0 auto;
+    }
+  }
+}
