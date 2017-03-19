@@ -29,7 +29,7 @@ When getting close to the end of slides, it loads additional 15 photos.
 
 You can navigate through photos either using side arrows navigation or using thumbs for next and prev images.
 
-# Getting Started
+# Running this project locally
 ## Dependencies
 Tools needed to run this app:
 * `node` and `npm`
