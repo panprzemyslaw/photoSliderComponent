@@ -8,7 +8,7 @@ Click here for Live Demo
 </a>
 
 # About
-This is the Photo Slider Component I created using AngularJS 1.6 + ES6 + SASS.
+This is the Photo Slider Component I created using AngularJS 1.6 + ES6 + SASS.<br/>
 Component is loading photos data from Flickr Api.
 
 ## How to use
@@ -18,11 +18,11 @@ Component takes two arguments:
 
 Example:
 
-<pre>
+```
 <photo-slider category="flower" limit="15" class="photo-slider"></photo-slider>
-</pre>
+```
 
-This component displays 15 photos from Flickr's 'flower' category.
+This component displays 15 photos from Flickr's 'flower' category.<br/>
 When getting close to the end of slides, it loads additional 15 photos.
 
 ## Navigation
