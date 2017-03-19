@@ -3,10 +3,12 @@
 <img src="http://przemekzakoscielny.com/mytmp/projects/photoSlider/photoSlider.png" alt="Photo Slider Component"/>
 
 # Live Demo
-<a href="http://przemekzakoscielny.com/mytmp/projects/photoSlider/" title="Przemek Zakoscielny - Photo Slider Demo - AngularJS, ES6, SASS"></a>
+<a href="http://przemekzakoscielny.com/mytmp/projects/photoSlider/" title="Przemek Zakoscielny - Photo Slider Demo - AngularJS, ES6, SASS">
+Click here for Live Demo
+</a>
 
 # About
-This is Photo Slider Component I created using AngularJS 1.6 + ES6 + SASS.
+This is the Photo Slider Component I created using AngularJS 1.6 + ES6 + SASS.
 Component is loading photos data from Flickr Api.
 
 ## How to use
@@ -16,7 +18,9 @@ Component takes two arguments:
 
 Example:
 
+<pre>
 <photo-slider category="flower" limit="15" class="photo-slider"></photo-slider>
+</pre>
 
 This component displays 15 photos from Flickr's 'flower' category.
 When getting close to the end of slides, it loads additional 15 photos.
