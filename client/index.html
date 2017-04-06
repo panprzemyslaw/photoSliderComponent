@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Range Slider Component</title>
+    <title>Photo Slider Component</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -13,7 +13,16 @@
   </head>
   <body ng-app="app" ng-strict-di ng-cloak>
 
-    <photo-slider></photo-slider>
+    <div class="page">
+
+      <h2>Example 1. Flickr's "flower" category</h2>
+
+      <photo-slider category="flower" limit="15" class="photo-slider"></photo-slider>
+
+      <h2>Example 2. Flickr's "cat" category</h2>
+
+      <photo-slider category="cat" limit="15" class="photo-slider"></photo-slider>
+    </div>
 
   </body>
 </html>

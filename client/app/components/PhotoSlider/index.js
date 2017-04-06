@@ -1,5 +1,7 @@
 import angular from 'angular';
-import component from './PhotoSlider.component';
+import photoSliderComponent from './PhotoSlider.component';
+import flickrService from './Flickr.service';
 
 export default angular.module('PhotoSlider', [])
-  .component('photoSlider', component);
+  .component('photoSlider', photoSliderComponent)
+  .service('flickrService', flickrService);
